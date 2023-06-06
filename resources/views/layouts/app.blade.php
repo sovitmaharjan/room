@@ -29,14 +29,9 @@
                             <div class="page-title-box">
                                 <h4 class="page-title">@yield('group') </h4>
                                 <ol class="breadcrumb p-0 m-0">
-                                    @hasSection('title1')
+                                    @hasSection('group')
                                         <li class="breadcrumb-item">
-                                            @yield('title1')
-                                        </li>
-                                    @endif
-                                    @hasSection('title2')
-                                        <li class="breadcrumb-item">
-                                            @yield('title1')
+                                            @yield('group')
                                         </li>
                                     @endif
                                     <li class="breadcrumb-item active">

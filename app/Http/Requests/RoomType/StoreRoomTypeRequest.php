@@ -14,7 +14,7 @@ class StoreRoomTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'required|unique:room_types,title'
         ];
     }
 }

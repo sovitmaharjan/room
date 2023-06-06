@@ -11,7 +11,7 @@ class RoomTypeController extends Controller
 {
     public function index()
     {
-        $data['roomType'] = RoomType::all();
+        $data['room_type'] = RoomType::orderBy('updated_at', 'desc')->get();
         return view('room-type.index', $data);
     }
 
@@ -30,26 +30,26 @@ class RoomTypeController extends Controller
         }
     }
 
-    public function edit(RoomType $roomType)
+    public function edit(RoomType $room_type)
     {
-        $data['roomType'] = $roomType;
+        $data['room_type'] = $room_type;
         return view('room-type.edit', $data);
     }
 
-    public function update(UpdateRoomTypeRequest $request, RoomType $roomType)
+    public function update(UpdateRoomTypeRequest $request, RoomType $room_type)
     {
         try {
-            $roomType->update($request->validated());
+            $room_type->update($request->validated());
             return back()->with('success', 'Room type has been updated');
         } catch (Exception $e) {
             return back()->with('error', $e->getMessage());
         }
     }
 
-    public function destroy(RoomType $roomType)
+    public function destroy(RoomType $room_type)
     {
         try {
-            $roomType->delete();
+            $room_type->delete();
             return redirect()->route('room-type.index')->with('success', 'Room type has been deleted');
         } catch (Exception $e) {
             return redirect()->route('room-type.index')->with('error', $e->getMessage());

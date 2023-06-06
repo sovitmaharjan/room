@@ -12,6 +12,10 @@
 <script src="{{ asset('assets/js/jquery.scrollTo.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/switchery/switchery.min.js') }}"></script>
 
+<script src="{{ asset('assets/plugins/toastr/toastr.min.js') }}"></script>
+
+<script src="{{ asset('assets/plugins/sweet-alert2/sweetalert2.min.js') }}"></script>
+
 <script src="{{ asset('assets/plugins/waypoints/jquery.waypoints.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/counterup/jquery.counterup.min.js') }}"></script>
 
@@ -23,7 +27,7 @@
 
 <script>
     toastr.options = {
-        "closeButton": false,
+        "closeButton": true,
         "debug": false,
         "newestOnTop": false,
         "progressBar": false,
@@ -41,4 +45,6 @@
     }
 </script>
 
+@include('layouts.partials.validation')
+@include('layouts.partials.session-message')
 @yield('script')

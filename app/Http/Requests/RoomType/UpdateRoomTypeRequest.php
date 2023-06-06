@@ -14,7 +14,7 @@ class UpdateRoomTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'required|unique:room_types,title,' . $this->route('room_type')->id
         ];
     }
 }
