@@ -27,7 +27,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box">
-                                <h4 class="page-title">@yield('page') </h4>
+                                <h4 class="page-title">@yield('group') </h4>
                                 <ol class="breadcrumb p-0 m-0">
                                     @hasSection('title1')
                                         <li class="breadcrumb-item">

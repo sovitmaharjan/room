@@ -12,10 +12,11 @@
                 </li>
 
                 <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-google-pages"></i><span> Room Type </span> <span class="menu-arrow"></span></a>
+                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-google-pages"></i><span> Room
+                            Type </span> <span class="menu-arrow"></span></a>
                     <ul class="list-unstyled">
-                        <li><a href="page-starter.html">List</a></li>
-                        <li><a href="page-login.html">Add</a></li>
+                        <li><a href="{{ route('room-type.index') }}">List</a></li>
+                        <li><a href="{{ route('room-type.create') }}">Add</a></li>
                     </ul>
                 </li>
 
@@ -29,7 +30,8 @@
                 </li>
 
                 <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-diamond-stone"></i><span>Booking
+                    <a href="javascript:void(0);" class="waves-effect"><i
+                            class="mdi mdi-diamond-stone"></i><span>Booking
                         </span> <span class="menu-arrow"></span></a>
                     <ul class="list-unstyled">
                         <li><a href="ui-buttons.html">List</a></li>

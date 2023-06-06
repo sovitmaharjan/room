@@ -1,9 +1,13 @@
-<link rel="shortcut icon" href="assets/images/favicon.ico">
-<link href="assets/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css" />
-<link rel="stylesheet" type="text/css" href="assets/css/icons.css" />
-<link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+<link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
+<link href="{{ asset('assets/plugins/toastr/toastr.min.css') }}" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/bootstrap.min.css') }}" />
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/icons.css') }}" />
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}" />
+<link href="{{ asset('assets/plugins/datatables/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/plugins/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
 
-<link rel="stylesheet" href="assets/plugins/switchery/switchery.min.css">
+<link rel="stylesheet" href="{{ asset('assets/plugins/switchery/switchery.min.css') }}">
 
-<script src="assets/js/modernizr.min.js"></script>
+<script src="{{ asset('assets/js/modernizr.min.js') }}"></script>
+
+@yield('style')
