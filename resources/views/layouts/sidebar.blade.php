@@ -24,8 +24,8 @@
                     <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-layers"></i><span> Room
                         </span> <span class="menu-arrow"></span></a>
                     <ul class="list-unstyled">
-                        <li><a href="ui-buttons.html">List</a></li>
-                        <li><a href="ui-typography.html">Add</a></li>
+                        <li><a href="{{ route('room.index') }}">List</a></li>
+                        <li><a href="{{ route('room.create') }}">Add</a></li>
                     </ul>
                 </li>
 

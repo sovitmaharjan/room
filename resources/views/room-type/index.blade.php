@@ -15,8 +15,8 @@
                     style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                     <thead>
                         <tr>
-                            <th width="5%">#</th>
-                            <th width="80%">Title</th>
+                            <th>#</th>
+                            <th>Title</th>
                             <th></th>
                         </tr>
                     </thead>
