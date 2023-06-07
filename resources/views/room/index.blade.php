@@ -14,18 +14,30 @@
             <div class="col-lg-3">
                 <div class="card card-border">
                     <div class="card-heading text-center">
-                        <div class="col-sm-12 text-center mb-2">
+                        <div class="col-sm-12 text-center mb-2" style="height: 150px; width: 100%; position: relative;">
                             <img src="{{ $value->getFirstMediaUrl('image') }}" alt="image"
-                                class="img-responsive img-thumbnail" width="200">
+                                class="img-responsive img-thumbnail" width="200" style="object-fit: contain; height: 100%">
                         </div>
                         <h3 class="card-title text-muted">{{ $value->name }}</h3>
+                        <h6 class="text-muted">Room Type: {{ $value->roomType->title }}</h6>
                         <div class="text-center mt-2">
-                            <a href="{{ route('room.edit', $value->id) }}"
-                                class="btn btn-icon waves-effect btn-info btn-xs m-b-5"> <i class="fas fa-eye"></i> </a>
+                            <a href="#" data-toggle="modal" data-target=".bs-example-modal-lg"
+                                class="btn btn-icon waves-effect btn-info btn-xs m-b-5 view" data-id="{{ $value->id }}"
+                                data-name="{{ $value->name }}" data-price="{{ $value->price }}"
+                                data-description="{{ $value->description }}" data-availability="{{ $value->availability }}"
+                                data-room_type="{{ $value->roomType->title }}"
+                                data-image="{{ $value->getFirstMediaUrl('image') }}"> <i class="fas fa-eye"></i> </a>
                             <a href="{{ route('room.edit', $value->id) }}"
                                 class="btn btn-icon waves-effect btn-warning btn-xs m-b-5"> <i class="fas fa-pen"></i> </a>
                             <button type="button" class="btn btn-icon waves-effect btn-danger btn-xs m-b-5 delete"
                                 data-id="{{ $value->id }}"> <i class="fas fa-times"></i> </button>
+                        </div>
+                        <div class="text-center">
+                            @if ($value->availability == 1)
+                                <span class="badge badge-success">Available</span>
+                            @else
+                                <span class="badge badge-danger">Unavailable</span>
+                            @endif
                         </div>
                     </div>
                     <div class="card-body">
@@ -36,6 +48,13 @@
                                 {{ $value->description }}
                             @endif
                         </p>
+                    </div>
+                    <div class="text-center mb-4">
+                        @if ($value->availability == 1)
+                            <a href="{{ route('room.edit', $value->id) }}"
+                                class="btn btn-icon waves-effect btn-success m-b-5"> <i class="fas fa-book"></i> Book Now
+                            </a>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -108,8 +127,9 @@
                                     class="page-link">{{ $last }}</a>
                             </li>
                         @endif
-                        <li class="page-item {{ $active == $room->lastPage() ? 'disabled' : '' }}"><a href="{{ route('room.index') . '?page=' . $active + 1 }}"
-                                class="page-link"><i class="fa fa-angle-right"></i></a>
+                        <li class="page-item {{ $active == $room->lastPage() ? 'disabled' : '' }}"><a
+                                href="{{ route('room.index') . '?page=' . $active + 1 }}" class="page-link"><i
+                                    class="fa fa-angle-right"></i></a>
                         </li>
                     @else
                         <li class="page-item {{ $room->currentPage() == 1 ? 'disabled' : '' }}"><a
@@ -132,55 +152,39 @@
         </div>
     </div>
 
-    {{-- old code table --}}
-    {{-- <div class="row">
-        <div class="col-sm-12">
-            <div class="card-box table-responsive">
-                <div class="text-right mb-2">
-                    <a href="{{ route('room.create') }}" class="btn btn-success waves-effect w-md waves-light m-b-5">
-                        <i class="fas fa-plus"></i> Add</a>
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true"
+        style="display: none;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title mt-0" id="modal-name">{{ $value->name }} (Room Type:
+                        {{ $value->roomType->title }})</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                <table id="room_table" class="table table-striped table-bordered dt-responsive nowrap text-center"
-                    style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Name</th>
-                            <th>Room Type</th>
-                            <th>Price</th>
-                            <th>Availability</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        @foreach ($room as $key => $value)
-                            <tr>
-                                <td>{{ $key + 1 }}</td>
-                                <td>{{ $value->name }}</td>
-                                <td>{{ $value->roomType->title }}</td>
-                                <td>Rs. {{ $value->price }}</td>
-                                <td>
-                                    @if ($value->availability == 1)
-                                        <span class="badge badge-success">Available</span>
-                                    @else
-                                        <span class="badge badge-danger">Unavailable</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    <a href="{{ route('room.edit', $value->id) }}"
-                                        class="btn btn-icon waves-effect btn-warning btn-xs m-b-5"> <i
-                                            class="fas fa-pen"></i> </a>
-                                    <button type="button" class="btn btn-icon waves-effect btn-danger btn-xs m-b-5 delete"
-                                        data-id="{{ $value->id }}"> <i class="fas fa-times"></i> </button>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                <div class="modal-body text-center">
+                    <div class="col-sm-12 text-center mb-2">
+                        <img src="" alt="image" id="modal-image" class="img-responsive img-thumbnail"
+                            width="400">
+                    </div>
+                    <div class="text-center mt-2">
+                        <a href="" id="modal-edit" class="btn btn-icon waves-effect btn-warning btn-xs m-b-5"> <i
+                                class="fas fa-pen"></i> </a>
+                        <button type="button" id="modal-delete"
+                            class="btn btn-icon waves-effect btn-danger btn-xs m-b-5 delete"> <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="text-center" id="modal-availability"></div>
+                    <p class="my-2">
+                        {{ $value->description }}
+                    </p>
+                    <div id="modal-book"></div>
+                </div>
             </div>
         </div>
-    </div> --}}
+    </div>
+
 @endsection
 
 @section('script')
@@ -201,7 +205,6 @@
                 console.log(result);
                 if (result.value) {
                     var url = "{{ route('room.destroy', ':id') }}";
-                    console.log(url);
                     url = url.replace(":id", id);
                     var form = $('<form></form>');
                     form.attr('method', 'POST');
@@ -220,6 +223,26 @@
                     form.submit();
                 }
             })
+        });
+
+        $(document).on('click', '.view', function() {
+            var ahref = $(this);
+            $('#modal-name').html(`${ahref.data('name')} (Room Type: ${ahref.data('room_type')})`);
+            $('#modal-image').attr('src', ahref.data('image'));
+            var editUrl = "{{ route('room.edit', ':id') }}";
+            editUrl = editUrl.replace(":id", ahref.data('id'));
+            $('#modal-edit').attr('src', editUrl);
+            var deleteUrl = "{{ route('room.destroy', ':id') }}";
+            deleteUrl = deleteUrl.replace(":id", ahref.data('id'));
+            $('#modal-delete').attr('src', deleteUrl);
+            $('#modal-delete').attr('data-id', ahref.data('id'));
+            $('#modal-availability').html(ahref.data('availability') == 1 ?
+                '<span class="badge badge-success">Available</span>' :
+                '<span class="badge badge-danger">Unavailable</span>');
+            var book = ahref.data('availability') == 1 ?
+                `<a href="${editUrl}" class="btn btn-icon waves-effect btn-success m-b-5"> <i class="fas fa-book"></i> Book Now </a>` :
+                '';
+            $('#modal-book').html(book);
         })
     </script>
 @endsection

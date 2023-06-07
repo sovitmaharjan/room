@@ -16,6 +16,7 @@ class StoreRoomRequest extends FormRequest
         return [
             'name' => 'required',
             'room_type_id' => 'required',
+            'image' => 'required|mimes:jpeg,png,jpg,gif',
             'price' => 'required|numeric',
             'description' => 'required',
             'availability' => 'nullable'

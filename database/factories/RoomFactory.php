@@ -9,7 +9,7 @@ class RoomFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
+            'name' => fake()->word(),
             'room_type_id' => rand(1, 8),
             'price' => rand(500, 50000),
             'description' => fake()->paragraph(),

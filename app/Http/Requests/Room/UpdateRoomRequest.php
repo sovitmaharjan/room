@@ -14,7 +14,19 @@ class UpdateRoomRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required',
+            'room_type_id' => 'required',
+            'image' => 'nullable|mimes:jpeg,png,jpg,gif',
+            'price' => 'required|numeric',
+            'description' => 'required',
+            'availability' => 'nullable'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'room_type_id.required' => 'The room type field is required.'
         ];
     }
 }

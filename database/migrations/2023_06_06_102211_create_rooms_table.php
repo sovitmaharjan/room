@@ -14,7 +14,7 @@ return new class extends Migration
             $table->foreignId('room_type_id')->constrained();
             $table->decimal('price', 18, 2);
             $table->text('description');
-            $table->boolean('availability')->default(0);
+            $table->boolean('availability');
             $table->timestamps();
         });
     }
