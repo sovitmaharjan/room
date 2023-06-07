@@ -7,6 +7,12 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card-box table-responsive">
+                @can('isCustomer')
+                    <div class="text-right mb-2">
+                        <a href="{{ route('room.index') }}" class="btn btn-success waves-effect w-md waves-light m-b-5"> <i
+                                class="mdi mdi-format-list-bulleted"></i> Room List</a>
+                    </div>
+                @endcan
                 <table id="booking_table" class="table table-striped table-bordered dt-responsive nowrap text-center"
                     style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                     <thead>
@@ -15,7 +21,6 @@
                             <th>User</th>
                             <th>Phone</th>
                             <th>Room</th>
-                            <th>Is Booked</th>
                             <th>Date</th>
                             <th>Duration</th>
                             <th>Status</th>
@@ -30,13 +35,13 @@
                                 <td>{{ $value->user->name }}</td>
                                 <td>{{ $value->extra['phone'] }}</td>
                                 <td>{{ $value->room->name }}</td>
-                                <td>{{ $value->room->name }}</td>
                                 <td>{{ $value->from->format('Y-m-d') }} - {{ $value->to->format('Y-m-d') }}</td>
                                 <td>{{ $value->duration }}</td>
                                 <td>{{ $value->statuses()->orderBy('created_at', 'desc')->first()->status }}</td>
                                 <td>
                                     <div style="display: flex; align-items: center;">
-                                        <select class="form-control" id="status-{{ $value->id }}" name="status" style="margin-right: 10px;">
+                                        <select class="form-control" id="status-{{ $value->id }}" name="status"
+                                            style="margin-right: 10px;">
                                             <option value="">Select</option>
                                             @foreach ($status as $key2 => $value2)
                                                 <option value="{{ $value2 }}">{{ $key2 }}</option>
@@ -64,7 +69,7 @@
         $(document).on('click', '.update-status', function() {
             var id = $(this).data('id');
             var status = $('#status-' + id).val();
-            if(status != '') {
+            if (status != '') {
                 swal({
                     title: 'Are you sure?',
                     // text: "You won't be able to revert this!",

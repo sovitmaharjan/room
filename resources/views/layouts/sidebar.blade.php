@@ -11,26 +11,31 @@
                         </span></a>
                 </li>
 
-                <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-google-pages"></i><span> Room
-                            Type </span> <span class="menu-arrow"></span></a>
-                    <ul class="list-unstyled">
-                        <li><a href="{{ route('room-type.index') }}">List</a></li>
-                        <li><a href="{{ route('room-type.create') }}">Add</a></li>
-                    </ul>
-                </li>
+                @can('isAdmin')
+                    <li class="has_sub">
+                        <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-google-pages"></i><span> Room
+                                Type </span> <span class="menu-arrow"></span></a>
+                        <ul class="list-unstyled">
+                            <li><a href="{{ route('room-type.index') }}">List</a></li>
+                            <li><a href="{{ route('room-type.create') }}">Add</a></li>
+                        </ul>
+                    </li>
+                @endcan
 
                 <li class="has_sub">
                     <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-layers"></i><span> Room
                         </span> <span class="menu-arrow"></span></a>
                     <ul class="list-unstyled">
                         <li><a href="{{ route('room.index') }}">List</a></li>
-                        <li><a href="{{ route('room.create') }}">Add</a></li>
+                        @can('isAdmin')
+                            <li><a href="{{ route('room.create') }}">Add</a></li>
+                        @endcan
                     </ul>
                 </li>
 
                 <li>
-                    <a href="{{ route('booking.index') }}" class="waves-effect"><i class="mdi mdi-diamond-stone"></i><span>
+                    <a href="{{ route('booking.index') }}" class="waves-effect"><i
+                            class="mdi mdi-diamond-stone"></i><span>
                             Booking
                         </span></a>
                 </li>

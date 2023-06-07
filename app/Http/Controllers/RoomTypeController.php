@@ -9,6 +9,11 @@ use Exception;
 
 class RoomTypeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('RoleAdmin');
+    }
+
     public function index()
     {
         $data['room_types'] = RoomType::orderBy('updated_at', 'desc')->get();

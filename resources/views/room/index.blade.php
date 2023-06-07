@@ -4,11 +4,12 @@
 @section('group', 'Room')
 
 @section('content')
-    <div class="text-right mb-3">
-        <a href="{{ route('room.create') }}" class="btn btn-success waves-effect w-md waves-light m-b-5"> <i
-                class="fas fa-plus"></i> Add</a>
-    </div>
-
+    @can('isAdmin')
+        <div class="text-right mb-3">
+            <a href="{{ route('room.create') }}" class="btn btn-success waves-effect w-md waves-light m-b-5"> <i
+                    class="fas fa-plus"></i> Add</a>
+        </div>
+    @endcan
     <div class="row">
         @foreach ($rooms as $key => $value)
             <div class="col-lg-3">
@@ -21,12 +22,14 @@
                         </div>
                         <h3 class="card-title text-muted">{{ $value->name }}</h3>
                         <h6 class="text-muted">Room Type: {{ $value->roomType->title }}</h6>
-                        <div class="text-center mt-2">
-                            <a href="{{ route('room.edit', $value->id) }}"
-                                class="btn btn-icon waves-effect btn-warning btn-xs m-b-5"> <i class="fas fa-pen"></i> </a>
-                            <button type="button" class="btn btn-icon waves-effect btn-danger btn-xs m-b-5 delete"
-                                data-id="{{ $value->id }}"> <i class="fas fa-times"></i> </button>
-                        </div>
+                        @can('isAdmin')
+                            <div class="text-center mt-2">
+                                <a href="{{ route('room.edit', $value->id) }}"
+                                    class="btn btn-icon waves-effect btn-warning btn-xs m-b-5"> <i class="fas fa-pen"></i> </a>
+                                <button type="button" class="btn btn-icon waves-effect btn-danger btn-xs m-b-5 delete"
+                                    data-id="{{ $value->id }}"> <i class="fas fa-times"></i> </button>
+                            </div>
+                        @endcan
                         <div class="text-center">
                             @if ($value->availability == 1)
                                 <span class="badge badge-success">Available</span>
@@ -36,8 +39,8 @@
                         </div>
                     </div>
                     <div class="text-center my-4">
-                        <a href="{{ route('room.show', $value->id) }}" class="btn btn-icon waves-effect btn-info m-b-5 view"> <i
-                                class="fas fa-eye"></i> View </a>
+                        <a href="{{ route('room.show', $value->id) }}"
+                            class="btn btn-icon waves-effect btn-info m-b-5 view"> <i class="fas fa-eye"></i> View </a>
 
                         {{-- <button type="button" data-toggle="modal" data-target=".bs-example-modal-lg"
                             class="btn btn-icon waves-effect btn-info m-b-5 view" data-id="{{ $value->id }}"
@@ -123,8 +126,8 @@
                         </li>
                     @else
                         <li class="page-item {{ $rooms->currentPage() == 1 ? 'disabled' : '' }}"><a
-                                href="{{ route('room.index') . '?page=' . $rooms->currentPage() - 1 }}" class="page-link"><i
-                                    class="fa fa-angle-left"></i></a>
+                                href="{{ route('room.index') . '?page=' . $rooms->currentPage() - 1 }}"
+                                class="page-link"><i class="fa fa-angle-left"></i></a>
                         </li>
                         @for ($i = 1; $i <= $rooms->lastPage(); $i++)
                             <li class="page-item {{ $rooms->currentPage() == $i ? 'active' : '' }}">
@@ -133,8 +136,8 @@
                             </li>
                         @endfor
                         <li class="page-item {{ $rooms->currentPage() == $rooms->lastPage() ? 'disabled' : '' }}"><a
-                                href="{{ route('room.index') . '?page=' . $rooms->currentPage() + 1 }}" class="page-link"><i
-                                    class="fa fa-angle-right"></i></a>
+                                href="{{ route('room.index') . '?page=' . $rooms->currentPage() + 1 }}"
+                                class="page-link"><i class="fa fa-angle-right"></i></a>
                         </li>
                     @endif
                 @endif

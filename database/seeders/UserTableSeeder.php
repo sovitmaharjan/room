@@ -11,22 +11,38 @@ class UserTableSeeder extends Seeder
 {
     public function run(): void
     {
-        $admin = User::create([
+        $user = User::create([
             'name' => 'admin',
             'email' => 'admin@admin.com',
             'email_verified_at' => now(),
             'password' => bcrypt('P@ssw0rd')
         ]);
         $role = Role::find(1);
-        $admin->assignRole($role);
+        $user->assignRole($role);
 
-        $admin = User::create([
+        $user = User::create([
             'name' => 'customer',
             'email' => 'customer@customer.com',
             'email_verified_at' => now(),
             'password' => bcrypt('P@ssw0rd')
         ]);
         $role = Role::find(2);
-        $admin->assignRole($role);
+        $user->assignRole($role);
+
+        $user = User::create([
+            'name' => 'customer 2',
+            'email' => 'customer2@customer2.com',
+            'email_verified_at' => now(),
+            'password' => bcrypt('P@ssw0rd')
+        ]);
+        $user->assignRole($role);
+
+        $user = User::create([
+            'name' => 'customer 3',
+            'email' => 'customer3@customer3.com',
+            'email_verified_at' => now(),
+            'password' => bcrypt('P@ssw0rd')
+        ]);
+        $user->assignRole($role);
     }
 }

@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\DB;
 
 class RoomController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('RoleAdmin')->except(['index', 'show']);
+    }
+
     public function index()
     {
         $data['rooms'] = Room::orderBy('updated_at', 'desc')->paginate(4);

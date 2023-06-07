@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Auth;
+namespace App\Http\Requests\Auth\Register;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -11,7 +11,7 @@ class RegisterRequest extends FormRequest
         return true;
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => 'required',

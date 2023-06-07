@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('RoleCustomer')->only(['create', 'store']);
+    }
+
     public function index()
     {
         $user = User::find(auth()->id());
@@ -22,7 +27,9 @@ class BookingController extends Controller
         ] : [
             'Cancel' => Booking::CANCELLED,
         ];
-        $data['bookings'] = Booking::orderBy('created_at', 'desc')->orderBy('updated_at', 'desc')->paginate(4);
+        $data['bookings'] = Booking::when(!$user->hasRole(User::ADMIN), function ($q) {
+            $q->where('user_id', auth()->id());
+        })->orderBy('created_at', 'desc')->orderBy('updated_at', 'desc')->get();
         return view('booking.index', $data);
     }
 
@@ -46,8 +53,21 @@ class BookingController extends Controller
                     'phone' => $request->phone
                 ]
             ];
-            $booking = Booking::create($data);
-            $booking->statuses()->create(['status' => Booking::PENDING]);
+            $booking = Booking::firstOrCreate(
+                [
+                    'user_id' => auth()->id(),
+                    'room_id' => $room_id,
+                    'from' => $request->from,
+                    'to' => $request->to,
+                ],
+                [
+                    'duration' => Carbon::parse($request->to_date)->diffInDays(Carbon::parse($request->from_date)) + 1,
+                    'extra' => [
+                        'phone' => $request->phone
+                    ]
+                ]
+            );
+            $booking->statuses()->firstOrCreate(['status' => Booking::PENDING]);
             DB::commit();
             return redirect()->route('booking.index')->with('success', 'Booking has been created');
         } catch (Exception $e) {
@@ -60,18 +80,21 @@ class BookingController extends Controller
     {
         try {
             $user = User::find(auth()->id());
-            if($user->hasRole(User::ADMIN)) {
-                if(!in_array($request->status, [Booking::CONFIRMED, Booking::REJECTED])) {
+            if ($user->hasRole(User::ADMIN)) {
+                if (!in_array($request->status, [Booking::CONFIRMED, Booking::REJECTED])) {
                     throw new Exception('Invalid Status');
                 }
             } else {
-                if(!in_array($request->status, [Booking::CANCELLED])) {
+                if (!in_array($request->status, [Booking::CANCELLED])) {
                     throw new Exception('Invalid Status');
                 }
             }
             $booking = Booking::where('id', $id)->when(!$user->hasRole(User::ADMIN), function ($q) {
                 $q->where('user_id', auth()->id());
-            })->firstOrFail();
+            })->first;
+            if (!$booking) {
+                throw new Exception('Order not found');
+            }
             $booking->statuses()->create(['status' => $request->status]);
             DB::commit();
             return redirect()->route('booking.index')->with('success', 'Booking has been created');
@@ -79,15 +102,5 @@ class BookingController extends Controller
             DB::rollBack();
             return back()->with('error', $e->getMessage());
         }
-    }
-
-    public function edit(Booking $booking)
-    {
-        //
-    }
-
-    public function update(Request $request, Booking $booking)
-    {
-        //
     }
 }
