@@ -10,23 +10,18 @@
     </div>
 
     <div class="row">
-        @foreach ($room as $key => $value)
+        @foreach ($rooms as $key => $value)
             <div class="col-lg-3">
                 <div class="card card-border">
                     <div class="card-heading text-center">
                         <div class="col-sm-12 text-center mb-2" style="height: 150px; width: 100%; position: relative;">
                             <img src="{{ $value->getFirstMediaUrl('image') }}" alt="image"
-                                class="img-responsive img-thumbnail" width="200" style="object-fit: contain; height: 100%">
+                                class="img-responsive img-thumbnail" width="200"
+                                style="object-fit: contain; height: 100%">
                         </div>
                         <h3 class="card-title text-muted">{{ $value->name }}</h3>
                         <h6 class="text-muted">Room Type: {{ $value->roomType->title }}</h6>
                         <div class="text-center mt-2">
-                            <a href="#" data-toggle="modal" data-target=".bs-example-modal-lg"
-                                class="btn btn-icon waves-effect btn-info btn-xs m-b-5 view" data-id="{{ $value->id }}"
-                                data-name="{{ $value->name }}" data-price="{{ $value->price }}"
-                                data-description="{{ $value->description }}" data-availability="{{ $value->availability }}"
-                                data-room_type="{{ $value->roomType->title }}"
-                                data-image="{{ $value->getFirstMediaUrl('image') }}"> <i class="fas fa-eye"></i> </a>
                             <a href="{{ route('room.edit', $value->id) }}"
                                 class="btn btn-icon waves-effect btn-warning btn-xs m-b-5"> <i class="fas fa-pen"></i> </a>
                             <button type="button" class="btn btn-icon waves-effect btn-danger btn-xs m-b-5 delete"
@@ -40,21 +35,16 @@
                             @endif
                         </div>
                     </div>
-                    <div class="card-body">
-                        <p class="mb-0">
-                            @if (strlen($value->description > 100))
-                                {{ substr($value->description, 0, 100) }} ...
-                            @else
-                                {{ $value->description }}
-                            @endif
-                        </p>
-                    </div>
-                    <div class="text-center mb-4">
-                        @if ($value->availability == 1)
-                            <a href="{{ route('room.edit', $value->id) }}"
-                                class="btn btn-icon waves-effect btn-success m-b-5"> <i class="fas fa-book"></i> Book Now
-                            </a>
-                        @endif
+                    <div class="text-center my-4">
+                        <a href="{{ route('room.show', $value->id) }}" class="btn btn-icon waves-effect btn-info m-b-5 view"> <i
+                                class="fas fa-eye"></i> View </a>
+
+                        {{-- <button type="button" data-toggle="modal" data-target=".bs-example-modal-lg"
+                            class="btn btn-icon waves-effect btn-info m-b-5 view" data-id="{{ $value->id }}"
+                            data-name="{{ $value->name }}" data-price="{{ $value->price }}"
+                            data-description="{{ $value->description }}" data-availability="{{ $value->availability }}"
+                            data-room_type="{{ $value->roomType->title }}"
+                            data-image="{{ $value->getFirstMediaUrl('image') }}"> <i class="fas fa-eye"></i> View </button> --}}
                     </div>
                 </div>
             </div>
@@ -64,12 +54,12 @@
     <div class="row">
         <div class="col-md-12 m-t-50 d-flex justify-content-center">
             <ul class="pagination">
-                @if ($room->total() > 0)
-                    @if ($room->lastPage() > 4)
+                @if ($rooms->total() > 0)
+                    @if ($rooms->lastPage() > 4)
                         @php
                             $first = 1;
-                            $last = $room->lastPage();
-                            $active = $room->currentPage();
+                            $last = $rooms->lastPage();
+                            $active = $rooms->currentPage();
                         @endphp
                         <li class="page-item {{ $active == 1 ? 'disabled' : '' }}">
                             <a href="{{ route('room.index') . '?page=' . $active - 1 }}" class="page-link"><i
@@ -127,23 +117,23 @@
                                     class="page-link">{{ $last }}</a>
                             </li>
                         @endif
-                        <li class="page-item {{ $active == $room->lastPage() ? 'disabled' : '' }}"><a
+                        <li class="page-item {{ $active == $rooms->lastPage() ? 'disabled' : '' }}"><a
                                 href="{{ route('room.index') . '?page=' . $active + 1 }}" class="page-link"><i
                                     class="fa fa-angle-right"></i></a>
                         </li>
                     @else
-                        <li class="page-item {{ $room->currentPage() == 1 ? 'disabled' : '' }}"><a
-                                href="{{ route('room.index') . '?page=' . $room->currentPage() - 1 }}" class="page-link"><i
+                        <li class="page-item {{ $rooms->currentPage() == 1 ? 'disabled' : '' }}"><a
+                                href="{{ route('room.index') . '?page=' . $rooms->currentPage() - 1 }}" class="page-link"><i
                                     class="fa fa-angle-left"></i></a>
                         </li>
-                        @for ($i = 1; $i <= $room->lastPage(); $i++)
-                            <li class="page-item {{ $room->currentPage() == $i ? 'active' : '' }}">
+                        @for ($i = 1; $i <= $rooms->lastPage(); $i++)
+                            <li class="page-item {{ $rooms->currentPage() == $i ? 'active' : '' }}">
                                 <a href="{{ route('room.index') . '?page=' . $i }}"
                                     class="page-link">{{ $i }}</a>
                             </li>
                         @endfor
-                        <li class="page-item {{ $room->currentPage() == $room->lastPage() ? 'disabled' : '' }}"><a
-                                href="{{ route('room.index') . '?page=' . $room->currentPage() + 1 }}" class="page-link"><i
+                        <li class="page-item {{ $rooms->currentPage() == $rooms->lastPage() ? 'disabled' : '' }}"><a
+                                href="{{ route('room.index') . '?page=' . $rooms->currentPage() + 1 }}" class="page-link"><i
                                     class="fa fa-angle-right"></i></a>
                         </li>
                     @endif
@@ -152,29 +142,29 @@
         </div>
     </div>
 
-    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true"
-        style="display: none;">
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title mt-0" id="modal-name">{{ $value->name }} (Room Type:
-                        {{ $value->roomType->title }})</h4>
+                    <h4 class="modal-title mt-0" id="modal-name"></h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body text-center">
-                    <div class="col-sm-12 text-center mb-2">
+                    <div class="col-sm-12 text-center mb-2" style="height: 300px; width: 100%; position: relative;">
                         <img src="" alt="image" id="modal-image" class="img-responsive img-thumbnail"
-                            width="400">
+                            width="400" style="object-fit: contain; height: 100%">
                     </div>
-                    <div class="text-center mt-2">
+                    <h3 class="card-title text-muted" id="modal-name-section"></h3>
+                    <h6 class="text-muted">Room Type: <span id="modal-room-type"></span></h6>
+                    {{-- <div class="text-center mt-2">
                         <a href="" id="modal-edit" class="btn btn-icon waves-effect btn-warning btn-xs m-b-5"> <i
                                 class="fas fa-pen"></i> </a>
                         <button type="button" id="modal-delete"
                             class="btn btn-icon waves-effect btn-danger btn-xs m-b-5 delete"> <i class="fas fa-times"></i>
                         </button>
-                    </div>
+                    </div> --}}
                     <div class="text-center" id="modal-availability"></div>
                     <p class="my-2">
                         {{ $value->description }}
@@ -189,8 +179,6 @@
 
 @section('script')
     <script>
-        $('#room_table').DataTable();
-
         $(document).on('click', '.delete', function() {
             var id = $(this).data('id');
             swal({
@@ -202,7 +190,6 @@
                 cancelButtonColor: '#d57171',
                 confirmButtonText: 'Yes, delete it!'
             }).then(function(result) {
-                console.log(result);
                 if (result.value) {
                     var url = "{{ route('room.destroy', ':id') }}";
                     url = url.replace(":id", id);
@@ -227,20 +214,24 @@
 
         $(document).on('click', '.view', function() {
             var ahref = $(this);
-            $('#modal-name').html(`${ahref.data('name')} (Room Type: ${ahref.data('room_type')})`);
+            $('#modal-name').html(ahref.data('name'));
+            $('#modal-name-section').html(ahref.data('name'));
+            $('#modal-room-type').html(ahref.data('room_type'));
             $('#modal-image').attr('src', ahref.data('image'));
-            var editUrl = "{{ route('room.edit', ':id') }}";
-            editUrl = editUrl.replace(":id", ahref.data('id'));
-            $('#modal-edit').attr('src', editUrl);
-            var deleteUrl = "{{ route('room.destroy', ':id') }}";
-            deleteUrl = deleteUrl.replace(":id", ahref.data('id'));
-            $('#modal-delete').attr('src', deleteUrl);
-            $('#modal-delete').attr('data-id', ahref.data('id'));
+            // var editUrl = "{{ route('room.edit', ':id') }}";
+            // editUrl = editUrl.replace(":id", ahref.data('id'));
+            // $('#modal-edit').attr('src', editUrl);
+            // var deleteUrl = "{{ route('room.destroy', ':id') }}";
+            // deleteUrl = deleteUrl.replace(":id", ahref.data('id'));
+            // $('#modal-delete').attr('src', deleteUrl);
+            // $('#modal-delete').attr('data-id', ahref.data('id'));
             $('#modal-availability').html(ahref.data('availability') == 1 ?
                 '<span class="badge badge-success">Available</span>' :
                 '<span class="badge badge-danger">Unavailable</span>');
+            var bookUrl = "{{ route('room.edit', ':id') }}";
+            bookUrl = bookUrl.replace(":id", ahref.data('id'));
             var book = ahref.data('availability') == 1 ?
-                `<a href="${editUrl}" class="btn btn-icon waves-effect btn-success m-b-5"> <i class="fas fa-book"></i> Book Now </a>` :
+                `<a href="${bookUrl}" class="btn btn-icon waves-effect btn-success m-b-5"> <i class="fas fa-book"></i> Book Now </a>` :
                 '';
             $('#modal-book').html(book);
         })

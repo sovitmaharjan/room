@@ -11,7 +11,7 @@ class RoomTypeController extends Controller
 {
     public function index()
     {
-        $data['room_type'] = RoomType::orderBy('updated_at', 'desc')->get();
+        $data['room_types'] = RoomType::orderBy('updated_at', 'desc')->get();
         return view('room-type.index', $data);
     }
 

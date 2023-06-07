@@ -12,7 +12,7 @@ class RoomFactory extends Factory
             'name' => fake()->word(),
             'room_type_id' => rand(1, 8),
             'price' => rand(500, 50000),
-            'description' => fake()->paragraph(),
+            'description' => fake()->paragraph(50),
             'availability' => rand(0, 1),
         ];
     }

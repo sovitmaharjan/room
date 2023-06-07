@@ -29,27 +29,10 @@
                     </ul>
                 </li>
 
-                <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i
-                            class="mdi mdi-diamond-stone"></i><span>Booking
-                        </span> <span class="menu-arrow"></span></a>
-                    <ul class="list-unstyled">
-                        <li><a href="ui-buttons.html">List</a></li>
-                        <li><a href="ui-typography.html">Add</a></li>
-                    </ul>
-                </li>
-
-                <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-format-list-bulleted"></i>
-                        <span> Tables </span> <span class="menu-arrow"></span></a>
-                    <ul class="list-unstyled">
-                        <li><a href="tables-basic.html">Basic Tables</a></li>
-                        <li><a href="tables-layouts.html">Tables Layouts</a></li>
-                        <li><a href="tables-datatable.html">Data Table</a></li>
-                        <li><a href="tables-responsive.html">Responsive Table</a></li>
-                        <li><a href="tables-tablesaw.html">Tablesaw Table</a></li>
-                        <li><a href="tables-editable.html">Editable Table</a></li>
-                    </ul>
+                <li>
+                    <a href="{{ route('booking.index') }}" class="waves-effect"><i class="mdi mdi-diamond-stone"></i><span>
+                            Booking
+                        </span></a>
                 </li>
             </ul>
         </div>

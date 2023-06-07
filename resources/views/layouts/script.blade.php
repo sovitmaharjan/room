@@ -12,6 +12,8 @@
 <script src="{{ asset('assets/js/jquery.scrollTo.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/switchery/switchery.min.js') }}"></script>
 
+<script src="{{ asset('assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+
 <script src="{{ asset('assets/plugins/toastr/toastr.min.js') }}"></script>
 
 <script src="{{ asset('assets/plugins/sweet-alert2/sweetalert2.min.js') }}"></script>

@@ -22,7 +22,7 @@
                     </thead>
 
                     <tbody>
-                        @foreach ($room_type as $key => $value)
+                        @foreach ($room_types as $key => $value)
                             <tr>
                                 <td>{{ $key + 1 }}</td>
                                 <td>{{ $value->title }}</td>

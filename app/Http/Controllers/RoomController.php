@@ -13,7 +13,7 @@ class RoomController extends Controller
 {
     public function index()
     {
-        $data['room'] = Room::orderBy('updated_at', 'desc')->paginate(4);
+        $data['rooms'] = Room::orderBy('updated_at', 'desc')->paginate(4);
         return view('room.index', $data);
     }
 
@@ -37,6 +37,12 @@ class RoomController extends Controller
             DB::rollBack();
             return back()->with('error', $e->getMessage());
         }
+    }
+
+    public function show(Room $room)
+    {
+        $data['room'] = $room;
+        return view('room.show', $data);
     }
 
     public function edit(Room $room)
