@@ -91,11 +91,11 @@ class BookingController extends Controller
             }
             $booking = Booking::where('id', $id)->when(!$user->hasRole(User::ADMIN), function ($q) {
                 $q->where('user_id', auth()->id());
-            })->first;
+            })->first();
             if (!$booking) {
                 throw new Exception('Order not found');
             }
-            $booking->statuses()->create(['status' => $request->status]);
+            $booking->statuses()->firstOrCreate(['status' => $request->status]);
             DB::commit();
             return redirect()->route('booking.index')->with('success', 'Booking has been created');
         } catch (Exception $e) {

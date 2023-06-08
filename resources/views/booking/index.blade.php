@@ -37,7 +37,7 @@
                                 <td>{{ $value->room->name }}</td>
                                 <td>{{ $value->from->format('Y-m-d') }} - {{ $value->to->format('Y-m-d') }}</td>
                                 <td>{{ $value->duration }}</td>
-                                <td>{{ $value->statuses()->orderBy('created_at', 'desc')->first()->status }}</td>
+                                <td>{{ $value->statuses()->latest()->first()->status }}</td>
                                 <td>
                                     <div style="display: flex; align-items: center;">
                                         <select class="form-control" id="status-{{ $value->id }}" name="status"

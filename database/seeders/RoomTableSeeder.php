@@ -11,7 +11,7 @@ class RoomTableSeeder extends Seeder
 {
     public function run(): void
     {
-        $rooms = Room::factory(10)->create();
+        $rooms = Room::factory(25)->create();
         $imageUrl = 'https://placeimg.com/200/150?' . rand(1, 100);
         foreach ($rooms as $item) {
             $item->addMediaFromUrl($imageUrl)->usingFilename(md5(Str::random(8) . time()) . '.jpg')->toMediaCollection('image');
